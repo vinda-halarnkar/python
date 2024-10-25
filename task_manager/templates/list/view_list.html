@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}List Management{% endblock %}
+{% block content %}
+<div style="display: flex;">
+
+    <!-- Left-hand side: List of Lists -->
+    <div style="width: 30%; border-right: 1px solid #ccc; padding-right: 10px;">
+        <h2>Your Lists</h2>
+        <button onclick="document.getElementById('add-list-modal').style.display='block'">Add List</button>
+        <ul>
+            {% for list in lists %}
+                <li>
+                    <a href="#" onclick="selectList('{{ list.id }}');" 
+                       style="{% if selected_list_id == list.id %} font-weight: bold;{% endif %}">
+                        {{ list.name }}
+                    </a>
+                    <button onclick="addItemToList('{{ list.id }}')">Add Item</button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Right-hand side: List Details -->
+    <div style="width: 70%; padding-left: 20px;">
+        <h2>List Details</h2>
+        {% if selected_list %}
+            <h3>{{ selected_list.name }}</h3>
+            <ul>
+                {% for item in selected_list.items.all %}
+                    <li>{{ item.name }} 
+                        <button onclick="markAsCompleted('{{ item.id }}')">Mark as Completed</button>
+                        <button onclick="deleteItem('{{ item.id }}')">Delete Item</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Select a list to see its details.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Modal for Adding a New List -->
+<div id="add-list-modal" style="display:none;">
+    <h2>Add New List</h2>
+
+</div>
+
+<script>
+    function selectList(listId) {
+        // Add logic to update the displayed list details.
+        window.location.href = "{% url 'list_view' %}?selected_list_id=" + listId;
+    }
+
+    function addItemToList(listId) {
+        // Logic to add an item to the list (you may want to create a modal or redirect).
+        alert('Add item to list with ID: ' + listId);
+    }
+
+    function markAsCompleted(itemId) {
+        // Logic to mark item as completed.
+        alert('Mark item with ID: ' + itemId + ' as completed');
+    }
+
+    function deleteItem(itemId) {
+        // Logic to delete item.
+        alert('Delete item with ID: ' + itemId);
+    }
+</script>
+
+{% endblock %}
