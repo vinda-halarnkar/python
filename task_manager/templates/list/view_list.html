@@ -1,70 +1,138 @@
 {% extends 'base.html' %}
 {% block title %}List Management{% endblock %}
 {% block content %}
-<div style="display: flex;">
-
+<div class="container">
     <!-- Left-hand side: List of Lists -->
-    <div style="width: 30%; border-right: 1px solid #ccc; padding-right: 10px;">
+    <div class="sidebar">
         <h2>Your Lists</h2>
-        <button onclick="document.getElementById('add-list-modal').style.display='block'">Add List</button>
-        <ul>
+        <button onclick="document.getElementById('add-list-modal').style.display='flex'">Add List</button>
+        <ul id="lists_listing">
             {% for list in lists %}
                 <li>
-                    <a href="#" onclick="selectList('{{ list.id }}');" 
-                       style="{% if selected_list_id == list.id %} font-weight: bold;{% endif %}">
-                        {{ list.name }}
-                    </a>
-                    <button onclick="addItemToList('{{ list.id }}')">Add Item</button>
+                    <div class="list-item" data-list-id="{{ list.id }}" >
+                        <span class="item-name">{{ list.name }}</span>
+                        <button class="delete-btn" onclick="deleteList('{{ list.id }}'); event.stopPropagation();">Delete</button>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
     </div>
 
     <!-- Right-hand side: List Details -->
-    <div style="width: 70%; padding-left: 20px;">
+    <div class="main">
         <h2>List Details</h2>
-        {% if selected_list %}
-            <h3>{{ selected_list.name }}</h3>
-            <ul>
-                {% for item in selected_list.items.all %}
-                    <li>{{ item.name }} 
-                        <button onclick="markAsCompleted('{{ item.id }}')">Mark as Completed</button>
-                        <button onclick="deleteItem('{{ item.id }}')">Delete Item</button>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Select a list to see its details.</p>
-        {% endif %}
+            <div id="list_details"></div>
+
+
     </div>
 </div>
 
 <!-- Modal for Adding a New List -->
 <div id="add-list-modal" style="display:none;">
-    <h2>Add New List</h2>
-
+    <div id="modal-content">
+        <h2>Add New List</h2>
+        <form id="listForm" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+            <button type="button" onclick="document.getElementById('add-list-modal').style.display='none'">Cancel</button>
+        </form>
+        <div id="message"></div>
+    </div>
 </div>
 
-<script>
-    function selectList(listId) {
-        // Add logic to update the displayed list details.
-        window.location.href = "{% url 'list_view' %}?selected_list_id=" + listId;
-    }
 
-    function addItemToList(listId) {
-        // Logic to add an item to the list (you may want to create a modal or redirect).
-        alert('Add item to list with ID: ' + listId);
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        $('#lists_listing .list-item:first').trigger('click');
+        $('#listForm').on('submit', function(event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: '{% url "add_list" %}',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#message').text(response.message);
+                    location.reload();
+                },
+                error: function(response, xhr, status, error) {
+                    $('#message').text('Failed to save form');
+                }
+            });
+        });
+
+        $('.list-item').on('click', function() {
+            event.preventDefault();
+
+            $('.list-item').removeClass('active');
+            $(this).addClass('active');
+
+            const listId =  parseInt($(this).data('list-id'), 10);
+            $.ajax({
+                url: 'list_detail/'+ listId +'/' ,
+                type: 'GET',
+                success: function(response) {
+                console.log(response)
+                    $('#list_details').html("").html(response)
+                    initialize()
+                },
+                error: function(response, xhr, status, error) {
+                    $('#message').text('Failed to save form');
+                }
+            });
+        });
+    });
+
+    function initialize() {
+        $('#itemForm').on('submit', function(event) {
+            event.preventDefault();
+            var activeListId = $('.list-item.active').data('list-id');
+
+            $.ajax({
+                url: '{% url "add_item" %}',
+                type: 'POST',
+                data: $(this).serialize() + '&list_id='+activeListId,
+                success: function(response) {
+                    $('#item_message').text(response.message);
+                    $('.list-item.active').trigger('click')
+                },
+                error: function(response, xhr, status, error) {
+                    $('#item_message').text('Failed to save form');
+                }
+            });
+        });
     }
 
     function markAsCompleted(itemId) {
-        // Logic to mark item as completed.
-        alert('Mark item with ID: ' + itemId + ' as completed');
+        $.ajax({
+            url: 'mark_item_complete/'+ itemId +'/' ,
+            type: 'GET',
+            success: function(response) {
+                $('.list-item.active').trigger('click')
+
+            },
+            error: function(response, xhr, status, error) {
+                $('#message').text('Failed to save form');
+            }
+        });
     }
 
-    function deleteItem(itemId) {
-        // Logic to delete item.
-        alert('Delete item with ID: ' + itemId);
+    function deleteList(listId) {
+        $.ajax({
+            url: 'delete_list/'+ listId +'/' ,
+            type: 'GET',
+            success: function(response) {
+                location.reload();
+            },
+            error: function(response, xhr, status, error) {
+                $('#message').text('Failed to save form');
+            }
+        });
     }
+
+
 </script>
-
 {% endblock %}

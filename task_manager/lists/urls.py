@@ -2,7 +2,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.list_view, name='list_view'),  # Ensure this is correct
+    path('', views.list_view, name='list_view'),
+    path('add_list/', views.add_list, name='add_list'),
+    path('add_item/', views.add_item, name='add_item'),
+    path('mark_item_complete/<int:item_id>/', views.mark_item_complete, name='mark_item_complete'),
+    path('delete_list/<int:list_id>/', views.delete_list, name='delete_list'),
+    path('list_detail/<int:list_id>/', views.list_detail, name='list_detail'),
     # path('create/', views.create_list),
     # path('<int:list_id>/item/add/', views.add_item),
     # path('<int:list_id>/delete/', views.delete_list),

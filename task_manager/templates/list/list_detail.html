@@ -1,0 +1,43 @@
+{% block content %}
+
+<h3>{{ list_name }}</h3>
+<button class="add-item-btn" onclick="document.getElementById('add-item-modal').style.display='flex'">Add Item</button>
+
+<ul>
+    {% for item in listItems.all %}
+        <li>
+            <div class="list-item">
+                <span class="item-name">{{ item.name }}</span>
+                <span class="cross-icon" onclick="markAsCompleted('{{ item.id }}')">
+                    <i class="fas fa-times"></i>
+                </span>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+<!-- Completed Items Section -->
+<div class="completed">
+    <h3>Completed Items</h3>
+    <ul>
+        {% for item in completed_items %}
+            <li style="text-decoration:line-through">{{ item.name }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+<div id="add-item-modal" style="display:none;">
+    <div class="item-modal-content">
+        <h2>Add New Item</h2>
+        <form id="itemForm" method="POST" action="#">
+            {% csrf_token %}
+            {{ itemForm.as_p }}
+            <button type="submit">Save</button>
+            <button type="button" onclick="document.getElementById('add-item-modal').style.display='none'">Cancel</button>
+        </form>
+        <div id="item_message"></div>
+    </div>
+</div>
+
+{% endblock %}

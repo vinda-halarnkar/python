@@ -13,6 +13,7 @@ import re
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 
+
 #Register functionality
 @csrf_exempt
 def register(request):
