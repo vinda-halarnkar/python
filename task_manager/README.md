@@ -48,12 +48,12 @@ pip install -r requirements.txt
 
 # Setup environment variables
 ```bash
-DB_ENGINE=django.db.backends.postgresql
+DB_ENGINE=django.db.backends.mysql
 DB_NAME=mydatabase
 DB_USER=myuser
 DB_PASSWORD=mypassword
 DB_HOST=localhost
-DB_PORT=5432
+DB_PORT=3306
 ```
 
 # Create migrations
