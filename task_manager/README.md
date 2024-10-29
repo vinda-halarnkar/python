@@ -1,6 +1,6 @@
 # python
 
-# Django List Management Project
+# Django Task Management Project
 
 A simple Django-based list management application where users can register, log in, and manage personal lists and items. The project uses MySQL as the database backend.
 

@@ -15,11 +15,15 @@ def register(request):
         username = data.get('username')
         email = data.get('email')
         password = data.get('password')
+        confirm_password = data.get('confirm_password')
 
         # Validate username
         if not username or len(username) < 3:
-            return JsonResponse({"error": "Username must be at least 3 characters long."}, status=400)
+            return render(request, 'auth/register.html', {'error': "Username must be at least 3 characters long."})
 
+        # Check if passwords match
+        if password != confirm_password:
+            return render(request, 'auth/register.html', {'error': "Passwords do not match."})
         # Validate email
         try:
             validate_email(email)

@@ -16,6 +16,3 @@ class Item(models.Model):
     completed = models.BooleanField(default=False)
     color = models.CharField(max_length=8, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    # def __str__(self):
-    #     return self.name
