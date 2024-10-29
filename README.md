@@ -28,7 +28,6 @@ A simple Django-based list management application where users can register, log 
 
 ```bash
 git clone git@github.com:vinda-halarnkar/python.git
-cd task_manager
 ```
 
 ### If you have virtualenv installed
