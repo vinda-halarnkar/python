@@ -38,7 +38,7 @@
 
 <div id="add-item-modal" style="display:none;">
     <div class="item-modal-content">
-        <h2>Add New Item</h2>
+        <h2>Item</h2>
         <form id="itemForm" method="POST" action="#">
             {% csrf_token %}
             {{ itemForm.as_p }}
