@@ -13,6 +13,7 @@
             margin: 0;
             padding: 20px;
         }
+
         .container {
             display: flex;
             justify-content: space-between;
@@ -57,6 +58,12 @@
             font-size: 1.8em;
             margin-bottom: 10px;
         }
+        .main .item-list-div {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e7f3fe;
+            border-left: 4px solid #2196F3;
+        }
         .main .completed {
             margin-top: 20px;
             padding: 10px;
@@ -92,26 +99,23 @@
         .modal-content button {
             margin-top: 10px;
         }
-
         #add-item-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-            display: none; /* Initially hidden */
-            justify-content: center; /* Center the content */
-            align-items: center; /* Center the content */
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
         }
-
         .item-modal-content {
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
         .delete-btn {
             background-color: #e57373;
             border: none;
@@ -139,42 +143,141 @@
         .cross-icon {
             color: #e57373;
             cursor: pointer;
-            margin-left: 10px;
+            margin: 0 10px;
         }
-
         .list-item {
-            display: flex;                      /* Use Flexbox for layout */
-            justify-content: space-between;     /* Space between child elements */
-            align-items: center;                /* Center items vertically */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #f9f9f9;
             margin-bottom: 5px;
         }
-
         .item-name {
-            flex-grow: 1;                       /* Allow the item name to take up available space */
-            cursor: pointer;                    /* Pointer cursor on hover */
-            font-size: 16px;                   /* Font size for the item name */
-            color: #333;                        /* Text color */
+            flex-grow: 1;
+            cursor: pointer;
+            font-size: 16px;
+            color: #333;
         }
-
         .delete-icon {
-            transition: color 0.2s;            /* Transition effect for icon color */
+            transition: color 0.2s;
         }
-
         .delete-icon:hover {
-            color: #e60000;                    /* Darker red on hover */
+            color: #e60000;
+        }
+        .list-item.active {
+            background-color: #e0f7fa;
+            border-color: #009688;
+        }
+        #sortOrder {
+            padding: 5px;
+            font-size: 1em;
+        }
+        .fas {
+            margin-x: 4px;
         }
 
-        .list-item.active {
-            background-color: #e0f7fa; /* Light cyan background for active state */
-            border-color: #009688;      /* Darker border color for active state */
+        .register-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .register-container h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .register-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+        }
+
+        .success-message {
+            color: green;
+            text-align: center;
+        }
+
+        .login-prompt {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-button {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-button:hover {
+            text-decoration: underline;
+        }
+
+        .logout-container {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px;
+        }
+
+        .logout-button {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #0056b3;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
         }
     </style>
 </head>
 <body>
+
     {% block content %}{% endblock %}
 </body>
 </html>

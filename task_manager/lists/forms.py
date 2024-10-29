@@ -7,6 +7,10 @@ class ListForm(forms.ModelForm):
         fields = ['name']
 
 class ItemForm(forms.ModelForm):
+    color = forms.CharField(
+        widget=forms.TextInput(attrs={'type': 'color'}),
+        required=False,  # Make it optional if you want
+    )
     class Meta:
         model = Item
-        fields = ['name']
+        fields = ['name', 'color']

@@ -17,6 +17,8 @@ venv.bak/
 .dist-info/
 *.egg
 
+.env
+
 # Backup files
 *~
 *.bak
