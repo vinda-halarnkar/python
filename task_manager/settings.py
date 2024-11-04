@@ -35,6 +35,7 @@ LOGIN_URL = '/auth/login/'
 INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
     'lists.apps.ListsConfig',
+    'webpack_tutorials.apps.WebpackConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
 ]
+
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

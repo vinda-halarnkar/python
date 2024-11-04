@@ -25,4 +25,8 @@ urlpatterns = [
 
     #api paths
     path('api/', include('lists.urls')),
+
+    #webapck
+    path('webpack/', include('webpack_tutorials.urls'))
+
 ]
