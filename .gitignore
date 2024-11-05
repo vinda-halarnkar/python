@@ -50,4 +50,6 @@ coverage.xml
 # Pytest
 .cache/
 
+node_modules/
+
 

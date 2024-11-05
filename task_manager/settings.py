@@ -30,11 +30,19 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 LOGIN_URL = '/auth/login/'
-# Application definition
+
+# Celery settings
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Redis URL
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+# CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
     'lists.apps.ListsConfig',
+    'reminders.apps.RemindersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

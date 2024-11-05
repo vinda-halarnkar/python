@@ -1,6 +1,9 @@
+from venv import logger
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from reminders.views import send_task_reminder
 from .forms import ListForm, ItemForm
 from .models import List, Item
 
@@ -18,12 +21,15 @@ def list_view(request):
 
 
 # Api to get lists
+# @api_view(['GET'])
 def get_list(request):
     try:
-        lists = List.objects.filter(user=request.user)
-        return JsonResponse(list(lists), safe=False)
+        send_task_reminder.delay()
+        return render(request, 'auth/login.html')
+
     except Exception as e:
-        return JsonResponse({"error": "Unable to retrieve lists at this time. Please try again later."}, status=500)
+        logger.error(e)
+        return JsonResponse({"error": "Error Occurred"}, status=400)
 
 
 # Create List

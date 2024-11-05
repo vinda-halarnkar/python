@@ -9,7 +9,7 @@ urlpatterns = [
     path('delete_list/<int:list_id>/', views.delete_list, name='delete_list'),
     path('list_detail/<int:list_id>/<str:sort_order>/', views.list_detail, name='list_detail'),
     path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
-    # path('create/', views.create_list),
+    path('get-lists/', views.get_list, name='get_list'),
     # path('<int:list_id>/item/add/', views.add_item),
     # path('<int:list_id>/delete/', views.delete_list),
     # path('sort/<str:order>/', views.sort_lists),
