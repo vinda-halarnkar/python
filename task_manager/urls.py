@@ -22,6 +22,6 @@ urlpatterns = [
     path('', include('authentication.urls')),
     path('auth/', include('authentication.urls')),
     path('lists/', include('lists.urls')),
-    # path('api/lists', include('lists.urls')),
+    path('upload/', include('documents.urls')),
     # path('api/lists', include('lists.urls')),
 ]

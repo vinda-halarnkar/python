@@ -1,0 +1,23 @@
+
+{% extends 'base.html' %}
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Upload</button>
+  </form>
+
+{% if file_url %}
+    <h3>Uploaded Image:</h3>
+    <img src="{{ file_url }}" alt="Uploaded Image" style="max-width: 400px; max-height: 400px;">
+{% endif %}
+
+{% if file_url_formulated %}
+    <h3>Formulated Uploaded Image:</h3>
+    <img src="{{ file_url_formulated }}" alt="Uploaded Image" style="max-width: 400px; max-height: 400px;">
+{% endif %}
+{% if error %}
+    <h3>Error:</h3>
+    <p>{{ error }}</p>
+{% endif %}
+{% endblock %}
