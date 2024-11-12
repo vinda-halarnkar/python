@@ -13,6 +13,7 @@ urlpatterns = [
 
     #api paths
     path('get-lists/', views.get_list, name="get_lists"),
+    path('get-lists/', views.get_list, name='get_list'),
     # path('<int:list_id>/item/add/', views.add_item),
     # path('<int:list_id>/delete/', views.delete_list),
     # path('sort/<str:order>/', views.sort_lists),

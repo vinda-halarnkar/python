@@ -39,11 +39,21 @@ AWS_S3_REGION_NAME      =   config('AWS_BUCKET_DEFAULT_REGION')
 AWS_STORAGE_BUCKET_NAME =   config('AWS_STORAGE_BUCKET_NAME')
 
 # Application definition
+
+# Celery settings
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Redis URL
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+# CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
 INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
     'lists.apps.ListsConfig',
     'webpack_tutorials.apps.WebpackConfig',
     'documents.apps.DocumentsConfig',
+    'reminders.apps.RemindersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
