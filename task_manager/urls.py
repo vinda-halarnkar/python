@@ -24,4 +24,11 @@ urlpatterns = [
     path('lists/', include('lists.urls')),
     path('upload/', include('documents.urls')),
     # path('api/lists', include('lists.urls')),
+
+    #api paths
+    path('api/', include('lists.urls')),
+
+    #webapck
+    path('webpack/', include('webpack_tutorials.urls'))
+
 ]

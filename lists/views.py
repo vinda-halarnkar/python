@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializer import ListSerializer
+
 from .forms import ListForm, ItemForm
 from .models import List, Item
 
@@ -15,16 +19,6 @@ def list_view(request):
                       {'lists': lists, 'form': form})
     except Exception as e:
         return JsonResponse({"error": "Unable to retrieve lists at this time. Please try again later."}, status=500)
-
-
-# Api to get lists
-def get_list(request):
-    try:
-        lists = List.objects.filter(user=request.user)
-        return JsonResponse(list(lists), safe=False)
-    except Exception as e:
-        return JsonResponse({"error": "Unable to retrieve lists at this time. Please try again later."}, status=500)
-
 
 # Create List
 @login_required
@@ -129,3 +123,20 @@ def delete_item(request, item_id):
         except Exception as e:
             return JsonResponse({'error': 'Unable to delete item, Try again later'}, status=404)
     return JsonResponse({"error": "Invalid request method."}, status=400)
+
+# Api to get lists
+@api_view(['GET'])
+def get_list(request):
+    try:
+        print('lists')
+        app = List.objects.all()
+        # Serialize the lists with their related items
+        serializer = ListSerializer(app, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        print(f"Error: {e}")
+        return Response("Unable to retrieve lists at this time. Please try again later.")
+
+@api_view(['POST'])
+def postData(request):
+    return Response(" test post request ")
