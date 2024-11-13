@@ -11,6 +11,9 @@ urlpatterns = [
     path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
     path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
 
+    #csv upload
+    path('upload/', views.upload_csv, name='upload_csv'),
+
     #api paths
     path('get-lists/', views.get_list, name="get_lists"),
     path('get-lists/', views.get_list, name='get_list'),

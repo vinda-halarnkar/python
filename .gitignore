@@ -17,7 +17,6 @@ venv.bak/
 .dist-info/
 *.egg
 
-.env
 
 # Backup files
 *~
@@ -37,7 +36,6 @@ coverage.xml
 
 # IDEs and editors
 .idea/
-.vscode/
 *.sublime-project
 *.sublime-workspace
 
@@ -57,3 +55,8 @@ node_modules/
 dist/
 build/
 /webpack_tutorials/static/
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
+config.bat
