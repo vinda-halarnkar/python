@@ -21,15 +21,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
     path('auth/', include('authentication.urls')),
-    path('lists/', include('lists.urls')),
+    path('lists/', include('lists.urls'), name='list_view'),
     path('upload/', include('documents.urls')),
     # path('api/lists', include('lists.urls')),
 
     #api paths
-    path('api/', include('lists.urls')),
+    # path('api/', include('lists.urls')),
 
     #webapck
-    path('webpack/', include('webpack_tutorials.urls'))
+    path('webpack/', include('webpack_tutorials.urls')),
 
     path('api/', include('lists.urls')),
     # path('api/lists', include('lists.urls')),
