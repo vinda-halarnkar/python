@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from venv import logger
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -10,6 +11,9 @@ from .serializer import ListSerializer
 from reminders.views import send_task_reminder
 from .forms import ListForm, ItemForm
 from .models import List, Item
+import csv
+
+from .tasks import process_csv_task
 
 
 # Create your views here.
@@ -156,3 +160,29 @@ def get_list(request):
 @api_view(['POST'])
 def postData(request):
     return Response(" test post request ")
+
+def upload_csv(request):
+    if request.method == 'POST':
+        csv_file = request.FILES['file']
+
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request, 'This is not a CSV file')
+            return redirect('list_view')
+
+        # Read file content and trigger Celery task
+        file_data = csv_file.read().decode('utf-8')
+        process_csv_task.delay(file_data, request.user.id)
+
+        # Decode and read CSV file
+        csv_file_data = csv_file.read().decode('utf-8').splitlines()
+        reader = csv.reader(csv_file_data)
+
+        # # Import each row into the List model
+        # for row in reader:
+        #     title = row[0]  # Assuming the title is in the first column
+        #     List.objects.create(name=title, user= request.user)
+
+        return redirect('list_view')
+        # form = CSVUploadForm()
+
+    # return render(request, 'upload_csv.html', {'form': form})

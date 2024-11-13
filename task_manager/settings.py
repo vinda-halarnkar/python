@@ -31,22 +31,41 @@ ALLOWED_HOSTS = []
 
 LOGIN_URL = '/auth/login/'
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 AWS_S3_ACCESS_KEY_ID       =   config('AWS_ACCESS_KEY_ID')
 AWS_S3_SECRET_ACCESS_KEY   =   config('AWS_SECRET_ACCESS_KEY')
 AWS_S3_REGION_NAME      =   config('AWS_BUCKET_DEFAULT_REGION')
 AWS_STORAGE_BUCKET_NAME =   config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN    = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+            "access_key": AWS_S3_ACCESS_KEY_ID,
+            "secret_key": AWS_S3_SECRET_ACCESS_KEY,
+            "bucket_name": AWS_STORAGE_BUCKET_NAME,
+            "region_name": AWS_S3_REGION_NAME,
+        },
+    },
+}
 
 # Application definition
 
 # Celery settings
-CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Redis URL
-CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
-# CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
@@ -67,7 +86,6 @@ INSTALLED_APPS = [
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
